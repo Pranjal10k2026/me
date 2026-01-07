@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Archive, Quote as QuoteIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Static data - will be replaced with database when Cloud is enabled
-const currentQuote = {
+// Edit this to change the current quote
+const initialQuote = {
   text: "The best way to predict the future is to create it.",
   author: "Peter Drucker",
   date: "January 7, 2025",
 };
 
-const archivedQuotes = [
+// Edit this array to pre-populate archived quotes
+const initialArchivedQuotes = [
   {
     id: 1,
     text: "In the middle of difficulty lies opportunity.",
@@ -30,6 +34,19 @@ const archivedQuotes = [
 ];
 
 const Quotes = () => {
+  const [currentQuote] = useState(initialQuote);
+  const [archivedQuotes, setArchivedQuotes] = useState(initialArchivedQuotes);
+
+  const handleArchive = () => {
+    const newArchivedQuote = {
+      id: Date.now(),
+      text: currentQuote.text,
+      author: currentQuote.author,
+      date: currentQuote.date,
+    };
+    setArchivedQuotes([newArchivedQuote, ...archivedQuotes]);
+  };
+
   return (
     <MainLayout>
       <div className="space-y-8">
@@ -54,9 +71,20 @@ const Quotes = () => {
               <cite className="text-sm text-muted-foreground not-italic font-mono">
                 — {currentQuote.author}
               </cite>
-              <span className="text-xs text-muted-foreground font-mono">
-                {currentQuote.date}
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-muted-foreground font-mono">
+                  {currentQuote.date}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleArchive}
+                  className="flex items-center gap-1"
+                >
+                  <Archive className="w-3 h-3" />
+                  Archive
+                </Button>
+              </div>
             </footer>
           </div>
         </section>
@@ -67,32 +95,36 @@ const Quotes = () => {
             <Archive className="w-4 h-4" />
             Archived Quotes
           </h2>
-          <div className="space-y-3">
-            {archivedQuotes.map((quote) => (
-              <div
-                key={quote.id}
-                className="p-4 border border-border rounded bg-card hover:bg-muted/30 transition-colors"
-              >
-                <p className="text-foreground/90 mb-2 italic">
-                  "{quote.text}"
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground font-mono">
-                    — {quote.author}
-                  </span>
-                  <span className="text-xs text-muted-foreground font-mono">
-                    {quote.date}
-                  </span>
-                </div>
+          <div className="border border-border rounded bg-card">
+            <ScrollArea className="h-[300px] p-4">
+              <div className="space-y-3">
+                {archivedQuotes.map((quote) => (
+                  <div
+                    key={quote.id}
+                    className="p-4 border border-border rounded bg-background hover:bg-muted/30 transition-colors"
+                  >
+                    <p className="text-foreground/90 mb-2 italic">
+                      "{quote.text}"
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground font-mono">
+                        — {quote.author}
+                      </span>
+                      <span className="text-xs text-muted-foreground font-mono">
+                        {quote.date}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </ScrollArea>
           </div>
         </section>
 
         {/* Note about editing */}
         <div className="p-4 bg-muted/50 rounded border border-border">
           <p className="text-xs text-muted-foreground">
-            <strong>Note:</strong> Enable Lovable Cloud to add daily quotes and archive them to a database.
+            <strong>Note:</strong> To change the daily quote, edit the <code className="bg-muted px-1 rounded">initialQuote</code> object in <code className="bg-muted px-1 rounded">src/pages/Quotes.tsx</code>
           </p>
         </div>
       </div>

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+/* Using system Arial font */
 
 /* Minimalist Portfolio Design System */
 
@@ -49,8 +49,8 @@
     --timeline-line: 0 0% 85%;
     --timeline-dot: 210 100% 50%;
     
-    --font-mono: 'IBM Plex Mono', monospace;
-    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-mono: 'Courier New', monospace;
+    --font-sans: Arial, sans-serif;
   }
 
   .dark {
