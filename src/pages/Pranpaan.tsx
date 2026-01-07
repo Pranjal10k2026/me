@@ -6,7 +6,7 @@ const Pranpaan = () => {
     <MainLayout>
       <div className="space-y-6">
         <header>
-          <h1 className="text-2xl font-semibold mb-2 flex items-center gap-3">
+          <h1 className="text-2xl font-normal mb-2 flex items-center gap-3">
             Pranpaan
             <a
               href="https://www.instagram.com/pranpaan/"
@@ -31,10 +31,10 @@ const Pranpaan = () => {
               <Instagram className="w-6 h-6 text-white" />
             </div>
             <div className="flex-1">
-              <h3 className="font-medium mb-2">Instagram Integration Required</h3>
+              <h3 className="font-normal mb-2">Instagram Integration Required</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                To display your Instagram posts dynamically, we need to set up the Instagram Basic Display API. 
-                This requires:
+                To display your Instagram posts dynamically, we need to set up the
+                Instagram Basic Display API. This requires:
               </p>
               <ol className="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
                 <li>Enable Lovable Cloud for backend functionality</li>
@@ -47,7 +47,7 @@ const Pranpaan = () => {
 
         {/* Static Preview */}
         <section>
-          <h2 className="text-sm font-medium text-muted-foreground mb-3">
+          <h2 className="text-sm font-normal text-muted-foreground mb-3">
             Preview Layout (Static)
           </h2>
           <div className="grid grid-cols-3 gap-3">
@@ -56,9 +56,7 @@ const Pranpaan = () => {
                 key={i}
                 className="aspect-square bg-muted rounded flex items-center justify-center"
               >
-                <span className="text-xs text-muted-foreground font-mono">
-                  Post {i}
-                </span>
+                <span className="text-xs text-muted-foreground">Post {i}</span>
               </div>
             ))}
           </div>
@@ -73,7 +71,7 @@ const Pranpaan = () => {
             href="https://www.instagram.com/pranpaan/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded text-sm font-medium hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded text-sm font-normal hover:opacity-90 transition-opacity"
           >
             View on Instagram
             <ExternalLink className="w-4 h-4" />

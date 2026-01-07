@@ -1,5 +1,5 @@
 import { MainLayout } from "@/components/layout/MainLayout";
-import { Bike, MapPin, Clock, TrendingUp, Upload, ExternalLink } from "lucide-react";
+import { Bike, MapPin, Clock, TrendingUp, Upload } from "lucide-react";
 
 // Static placeholder data
 const activities = [
@@ -34,7 +34,7 @@ const Cycling = () => {
     <MainLayout>
       <div className="space-y-6">
         <header>
-          <h1 className="text-2xl font-semibold mb-2 flex items-center gap-3">
+          <h1 className="text-2xl font-normal mb-2 flex items-center gap-3">
             <Bike className="w-6 h-6" />
             Cycling
           </h1>
@@ -47,12 +47,16 @@ const Cycling = () => {
         <section className="p-6 border border-border rounded bg-card">
           <div className="flex items-start gap-4">
             <div className="p-3 bg-[#FC4C02] rounded-lg">
-              <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+              <svg
+                className="w-6 h-6 text-white"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169" />
               </svg>
             </div>
             <div className="flex-1">
-              <h3 className="font-medium mb-2">Strava Integration</h3>
+              <h3 className="font-normal mb-2">Strava Integration</h3>
               <p className="text-sm text-muted-foreground mb-4">
                 Connect your Strava account to automatically sync your cycling activities.
               </p>
@@ -67,7 +71,7 @@ const Cycling = () => {
 
         {/* Photo Upload Section */}
         <section>
-          <h2 className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
+          <h2 className="text-sm font-normal text-muted-foreground mb-3 flex items-center gap-2">
             <Upload className="w-4 h-4" />
             Cycling Photos
           </h2>
@@ -84,7 +88,7 @@ const Cycling = () => {
 
         {/* Activities List */}
         <section>
-          <h2 className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
+          <h2 className="text-sm font-normal text-muted-foreground mb-3 flex items-center gap-2">
             <TrendingUp className="w-4 h-4" />
             Recent Activities (Preview)
           </h2>
@@ -95,10 +99,8 @@ const Cycling = () => {
                 className="p-4 border border-border rounded bg-card hover:bg-muted/30 transition-colors"
               >
                 <div className="flex items-start justify-between mb-2">
-                  <h3 className="font-medium text-foreground">{activity.name}</h3>
-                  <span className="text-xs text-muted-foreground font-mono">
-                    {activity.date}
-                  </span>
+                  <h3 className="font-normal text-foreground">{activity.name}</h3>
+                  <span className="text-xs text-muted-foreground">{activity.date}</span>
                 </div>
                 <div className="flex items-center gap-6 text-sm text-muted-foreground">
                   <span className="flex items-center gap-1.5">
@@ -122,7 +124,8 @@ const Cycling = () => {
         {/* Note about Strava */}
         <div className="p-4 bg-muted/50 rounded border border-border">
           <p className="text-xs text-muted-foreground">
-            <strong>Note:</strong> Enable Lovable Cloud and add your Strava API key to sync real activities.
+            <strong>Note:</strong> Enable Lovable Cloud and add your Strava API key to
+            sync real activities.
           </p>
         </div>
       </div>

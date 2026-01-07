@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Archive, Quote as QuoteIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -33,9 +33,32 @@ const initialArchivedQuotes = [
   },
 ];
 
+const ARCHIVE_STORAGE_KEY = "pk_archived_quotes_v1";
+
 const Quotes = () => {
   const [currentQuote] = useState(initialQuote);
-  const [archivedQuotes, setArchivedQuotes] = useState(initialArchivedQuotes);
+
+  const [archivedQuotes, setArchivedQuotes] = useState(() => {
+    try {
+      const raw = window.localStorage.getItem(ARCHIVE_STORAGE_KEY);
+      if (!raw) return initialArchivedQuotes;
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : initialArchivedQuotes;
+    } catch {
+      return initialArchivedQuotes;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(
+        ARCHIVE_STORAGE_KEY,
+        JSON.stringify(archivedQuotes)
+      );
+    } catch {
+      // ignore write errors (e.g. privacy mode)
+    }
+  }, [archivedQuotes]);
 
   const handleArchive = () => {
     const newArchivedQuote = {
@@ -44,14 +67,14 @@ const Quotes = () => {
       author: currentQuote.author,
       date: currentQuote.date,
     };
-    setArchivedQuotes([newArchivedQuote, ...archivedQuotes]);
+    setArchivedQuotes((prev) => [newArchivedQuote, ...prev]);
   };
 
   return (
     <MainLayout>
       <div className="space-y-8">
         <header>
-          <h1 className="text-2xl font-semibold mb-2">Daily Quotes</h1>
+          <h1 className="text-2xl font-normal mb-2">Daily Quotes</h1>
           <p className="text-muted-foreground text-sm">
             Daily inspiration. View-only mode.
           </p>
@@ -59,20 +82,20 @@ const Quotes = () => {
 
         {/* Current Quote */}
         <section>
-          <h2 className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
+          <h2 className="text-sm font-normal text-muted-foreground mb-3 flex items-center gap-2">
             <QuoteIcon className="w-4 h-4" />
             Today's Quote
           </h2>
           <div className="quote-card">
-            <blockquote className="text-xl font-medium text-foreground mb-3 italic">
+            <blockquote className="text-xl font-normal text-foreground mb-3 italic">
               "{currentQuote.text}"
             </blockquote>
             <footer className="flex items-center justify-between">
-              <cite className="text-sm text-muted-foreground not-italic font-mono">
+              <cite className="text-sm text-muted-foreground not-italic">
                 — {currentQuote.author}
               </cite>
               <div className="flex items-center gap-3">
-                <span className="text-xs text-muted-foreground font-mono">
+                <span className="text-xs text-muted-foreground">
                   {currentQuote.date}
                 </span>
                 <Button
@@ -91,7 +114,7 @@ const Quotes = () => {
 
         {/* Archive */}
         <section>
-          <h2 className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
+          <h2 className="text-sm font-normal text-muted-foreground mb-3 flex items-center gap-2">
             <Archive className="w-4 h-4" />
             Archived Quotes
           </h2>
@@ -107,10 +130,10 @@ const Quotes = () => {
                       "{quote.text}"
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground font-mono">
+                      <span className="text-xs text-muted-foreground">
                         — {quote.author}
                       </span>
-                      <span className="text-xs text-muted-foreground font-mono">
+                      <span className="text-xs text-muted-foreground">
                         {quote.date}
                       </span>
                     </div>
@@ -124,7 +147,9 @@ const Quotes = () => {
         {/* Note about editing */}
         <div className="p-4 bg-muted/50 rounded border border-border">
           <p className="text-xs text-muted-foreground">
-            <strong>Note:</strong> To change the daily quote, edit the <code className="bg-muted px-1 rounded">initialQuote</code> object in <code className="bg-muted px-1 rounded">src/pages/Quotes.tsx</code>
+            <strong>Note:</strong> To change the daily quote, edit the{" "}
+            <code className="bg-muted px-1 rounded">initialQuote</code> object in{" "}
+            <code className="bg-muted px-1 rounded">src/pages/Quotes.tsx</code>
           </p>
         </div>
       </div>
