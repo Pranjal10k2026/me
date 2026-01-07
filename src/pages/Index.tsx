@@ -13,14 +13,14 @@ const Index = () => {
             className="w-32 h-32 rounded object-cover border border-border"
           />
           <div className="flex-1">
-            <h1 className="text-3xl font-semibold mb-2">Pranjal Kalekar</h1>
-            <p className="text-muted-foreground text-sm font-mono mb-4">
+            <h1 className="text-3xl font-normal mb-2">Pranjal Kalekar</h1>
+            <p className="text-muted-foreground text-sm mb-4">
               kalekar.p@northeastern.edu • 857-294-2305
             </p>
             <p className="text-foreground/90 leading-relaxed max-w-2xl">
-              Applied AI engineer with strong expertise in designing and deploying scalable 
-              machine learning models using Python and contemporary toolkits. Developed 
-              graph-based imputation algorithms and optimized GNN and XGBoost models to 
+              Applied AI engineer with strong expertise in designing and deploying scalable
+              machine learning models using Python and contemporary toolkits. Developed
+              graph-based imputation algorithms and optimized GNN and XGBoost models to
               achieve up to 40% performance gains over baselines in complex datasets.
             </p>
           </div>
@@ -28,7 +28,7 @@ const Index = () => {
 
         {/* Resume Section */}
         <section>
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-normal mb-4 flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-accent" />
             Resume
           </h2>
@@ -37,21 +37,17 @@ const Index = () => {
               <div className="w-3 h-3 rounded-full bg-destructive/60" />
               <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
               <div className="w-3 h-3 rounded-full bg-green-500/60" />
-              <span className="ml-2 text-xs text-muted-foreground font-mono">
+              <span className="ml-2 text-xs text-muted-foreground">
                 Pranjal_Kalekar_Applied_AI_Engineer.pdf
               </span>
             </div>
-            <iframe
-              src="/resume.pdf"
-              className="pdf-viewer"
-              title="Resume PDF"
-            />
+            <iframe src="/resume.pdf" className="pdf-viewer" title="Resume PDF" />
           </div>
         </section>
 
         {/* Quick Links */}
         <section>
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-normal mb-4 flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-accent" />
             Technical Skills
           </h2>
@@ -82,12 +78,12 @@ const Index = () => {
 function SkillCard({ title, items }: { title: string; items: string[] }) {
   return (
     <div className="p-4 border border-border rounded bg-card">
-      <h3 className="text-sm font-medium mb-2">{title}</h3>
+      <h3 className="text-sm font-normal mb-2">{title}</h3>
       <div className="flex flex-wrap gap-1.5">
         {items.map((item) => (
           <span
             key={item}
-            className="px-2 py-0.5 text-xs font-mono bg-secondary text-secondary-foreground rounded"
+            className="px-2 py-0.5 text-xs bg-secondary text-secondary-foreground rounded"
           >
             {item}
           </span>
