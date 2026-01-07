@@ -1,14 +1,100 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { MainLayout } from "@/components/layout/MainLayout";
+import profilePhoto from "@/assets/profile-photo.jpeg";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <MainLayout>
+      <div className="space-y-8">
+        {/* Header Section */}
+        <section className="flex items-start gap-8">
+          <img
+            src={profilePhoto}
+            alt="Pranjal Kalekar"
+            className="w-32 h-32 rounded object-cover border border-border"
+          />
+          <div className="flex-1">
+            <h1 className="text-3xl font-semibold mb-2">Pranjal Kalekar</h1>
+            <p className="text-muted-foreground text-sm font-mono mb-4">
+              kalekar.p@northeastern.edu • 857-294-2305
+            </p>
+            <p className="text-foreground/90 leading-relaxed max-w-2xl">
+              Applied AI engineer with strong expertise in designing and deploying scalable 
+              machine learning models using Python and contemporary toolkits. Developed 
+              graph-based imputation algorithms and optimized GNN and XGBoost models to 
+              achieve up to 40% performance gains over baselines in complex datasets.
+            </p>
+          </div>
+        </section>
+
+        {/* Resume Section */}
+        <section>
+          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            Resume
+          </h2>
+          <div className="border border-border rounded bg-card overflow-hidden">
+            <div className="bg-secondary px-4 py-2 border-b border-border flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-destructive/60" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
+              <div className="w-3 h-3 rounded-full bg-green-500/60" />
+              <span className="ml-2 text-xs text-muted-foreground font-mono">
+                Pranjal_Kalekar_Applied_AI_Engineer.pdf
+              </span>
+            </div>
+            <iframe
+              src="/resume.pdf"
+              className="pdf-viewer"
+              title="Resume PDF"
+            />
+          </div>
+        </section>
+
+        {/* Quick Links */}
+        <section>
+          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            Technical Skills
+          </h2>
+          <div className="grid grid-cols-2 gap-4">
+            <SkillCard
+              title="Languages"
+              items={["Python", "MySQL", "MS SQL", "R", "C++", "HTML/CSS"]}
+            />
+            <SkillCard
+              title="Databases"
+              items={["MongoDB", "Neo4j", "PostgreSQL", "Apache Spark"]}
+            />
+            <SkillCard
+              title="Tools"
+              items={["Git", "GCP", "Azure", "Tableau", "PowerBI"]}
+            />
+            <SkillCard
+              title="ML Libraries"
+              items={["PyTorch", "TensorFlow", "XGBoost", "Scikit-learn"]}
+            />
+          </div>
+        </section>
+      </div>
+    </MainLayout>
+  );
+};
+
+function SkillCard({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className="p-4 border border-border rounded bg-card">
+      <h3 className="text-sm font-medium mb-2">{title}</h3>
+      <div className="flex flex-wrap gap-1.5">
+        {items.map((item) => (
+          <span
+            key={item}
+            className="px-2 py-0.5 text-xs font-mono bg-secondary text-secondary-foreground rounded"
+          >
+            {item}
+          </span>
+        ))}
       </div>
     </div>
   );
-};
+}
 
 export default Index;
