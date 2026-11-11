@@ -41,7 +41,11 @@ const Index = () => {
                 Pranjal_Kalekar_Applied_AI_Engineer.pdf
               </span>
             </div>
-            <iframe src="/resume.pdf" className="pdf-viewer" title="Resume PDF" />
+            <iframe
+                src={`${import.meta.env.BASE_URL}resume.pdf`}
+                className="pdf-viewer"
+                title="Resume PDF"
+              />
           </div>
         </section>
 

@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Ideas from "./pages/Ideas";
 import Quotes from "./pages/Quotes";
@@ -19,7 +19,7 @@ function App() {
       <TooltipProvider delayDuration={0}>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <HashRouter>
           <PetCanvas />
           <Routes>
             <Route path="/" element={<Index />} />
@@ -29,7 +29,7 @@ function App() {
             <Route path="/cycling" element={<Cycling />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </TooltipProvider>
     </QueryClientProvider>
   );
