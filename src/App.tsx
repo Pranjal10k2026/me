@@ -9,6 +9,7 @@ import Quotes from "./pages/Quotes";
 import Pranpaan from "./pages/Pranpaan";
 import Cycling from "./pages/Cycling";
 import NotFound from "./pages/NotFound";
+import PetCanvas from "@/components/PetCanvas";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ function App() {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <PetCanvas />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/ideas" element={<Ideas />} />
