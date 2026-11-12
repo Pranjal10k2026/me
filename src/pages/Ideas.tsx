@@ -5,30 +5,39 @@ import { CalendarDays } from "lucide-react";
 const ideas = [
   {
     id: 1,
-    title: "Graph-Based Medical Imputation System",
+    title: "US Census Bureau TIGER/Line + American Community Survey (ACS)",
     description:
-      "Building a comprehensive graph neural network for medical data imputation with focus on protein interaction networks.",
+      "Engineering a spatial analytics pipeline in Python using GeoPandas and PySAL/Mapclassify to merge US Census TIGER/Line tract geometries with American Community Survey (ACS) socioeconomic data.",
     status: "In Progress",
-    timeline: "Q1 2025",
-    tags: ["GNN", "Healthcare", "Python"],
+    timeline: "Sept 2026",
+    tags: ["GeoPandas", "Healthcare", "Python"],
   },
   {
     id: 2,
-    title: "Real-time Attention Tracking Dashboard",
+    title: "Autonomous Research Copilot",
     description:
-      "Expanding the POC from internship to a full-fledged attention monitoring system with edge deployment capabilities.",
+      "A system where a user inputs a complex research question, a Supervisor Agent breaks it down, a Retriever Agent queries a private document database via LlamaIndex, a Writer Agent synthesizes the findings, and the entire pipeline is exposed via a production REST API deployed to the cloud.",
     status: "Planning",
-    timeline: "Q2 2025",
+    timeline: "Oct 2026",
     tags: ["Computer Vision", "Edge Computing", "React"],
   },
   {
     id: 3,
-    title: "Cycling Performance Analytics",
+    title: "Fuel-it Right Apple watch dashboard",
     description:
-      "Personal project to analyze and visualize cycling data from Strava with predictive modeling for performance optimization.",
+      "Deploying my project Fuel-it-Right(Check Resume) on apple watch interface to connect with real time sensors for performance. Link: https://kcal-pulse-watch.lovable.app",
     status: "Ideation",
-    timeline: "Q3 2025",
-    tags: ["Data Analytics", "Strava API", "Visualization"],
+    timeline: "Dec 2025",
+    tags: ["XGB Model", "Strava API", "Visualization"],
+  },
+   {
+    id: 4,
+    title: "Floral Yosemite Hats",
+    description:
+      "Got a monochromatic hat from Yosemite trip last month, want to decorate it little floral patters using crochet and embroidery",
+    status: "Ideation",
+    timeline: "Nov 2026",
+    tags: ["Crochet", "Embroidery", "Creativity"],
   },
 ];
 
@@ -37,10 +46,10 @@ const Ideas = () => {
     <MainLayout>
       <div className="space-y-6">
         <header>
-          <h1 className="text-2xl font-normal mb-2">Current Ideas</h1>
-          <p className="text-muted-foreground text-sm">
-            Project ideas and their timelines. View-only mode.
-          </p>
+          <h1 className="text-2xl font-normal mb-2">Current Ideas I am working on</h1>
+          {/* <p className="text-muted-foreground text-sm">
+            Project ideas and their timelines.
+          </p> */}
         </header>
 
         {/* Timeline */}
@@ -77,13 +86,6 @@ const Ideas = () => {
           ))}
         </div>
 
-        {/* Note about editing */}
-        <div className="mt-8 p-4 bg-muted/50 rounded border border-border">
-          <p className="text-xs text-muted-foreground">
-            <strong>Note:</strong> Enable Lovable Cloud to make this section editable
-            with a database backend.
-          </p>
-        </div>
       </div>
     </MainLayout>
   );
