@@ -4,9 +4,13 @@ import { SidebarContext } from "./SidebarContext";
 
 interface MainLayoutProps {
   children: React.ReactNode;
+  mainClassName?: string;
 }
 
-export function MainLayout({ children }: MainLayoutProps) {
+export function MainLayout({
+  children,
+  mainClassName = "",
+}: MainLayoutProps) {
   const sidebar = useContext(SidebarContext);
 
   if (!sidebar) {
@@ -23,7 +27,7 @@ export function MainLayout({ children }: MainLayoutProps) {
       <main
         className={`min-h-screen transition-[margin] duration-200 ${
           sidebar.collapsed ? "ml-16" : "ml-[260px]"
-        }`}
+        } ${mainClassName}`}
       >
         <div className="p-4 md:p-8 max-w-5xl animate-fade-in">
           {children}

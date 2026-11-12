@@ -1,157 +1,137 @@
 import { useEffect, useState } from "react";
+import { Archive } from "lucide-react";
 import { MainLayout } from "@/components/layout/MainLayout";
-import { Archive, Quote as QuoteIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { quotes } from "@/data/quotes";
 
-// Edit this to change the current quote
-const initialQuote = {
-  text: "The best way to predict the future is to create it.",
-  author: "Peter Drucker",
-  date: "January 7, 2025",
-};
+const easternDateFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "America/New_York",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
 
-// Edit this array to pre-populate archived quotes
-const initialArchivedQuotes = [
-  {
-    id: 1,
-    text: "In the middle of difficulty lies opportunity.",
-    author: "Albert Einstein",
-    date: "January 6, 2025",
-  },
-  {
-    id: 2,
-    text: "The only way to do great work is to love what you do.",
-    author: "Steve Jobs",
-    date: "January 5, 2025",
-  },
-  {
-    id: 3,
-    text: "Data is the new oil. It's valuable, but if unrefined it cannot really be used.",
-    author: "Clive Humby",
-    date: "January 4, 2025",
-  },
-];
+const displayDateFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "UTC",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
 
-const ARCHIVE_STORAGE_KEY = "pk_archived_quotes_v1";
+function getEasternDate(): string {
+  const parts = easternDateFormatter.formatToParts(new Date());
+
+  const year = parts.find((part) => part.type === "year")?.value;
+  const month = parts.find((part) => part.type === "month")?.value;
+  const day = parts.find((part) => part.type === "day")?.value;
+
+  if (!year || !month || !day) {
+    throw new Error("Unable to determine the current Eastern date.");
+  }
+
+  return `${year}-${month}-${day}`;
+}
+
+function formatDate(date: string): string {
+  return displayDateFormatter.format(new Date(`${date}T12:00:00Z`));
+}
 
 const Quotes = () => {
-  const [currentQuote] = useState(initialQuote);
-
-  const [archivedQuotes, setArchivedQuotes] = useState(() => {
-    try {
-      const raw = window.localStorage.getItem(ARCHIVE_STORAGE_KEY);
-      if (!raw) return initialArchivedQuotes;
-      const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : initialArchivedQuotes;
-    } catch {
-      return initialArchivedQuotes;
-    }
-  });
+  const [today, setToday] = useState(getEasternDate);
 
   useEffect(() => {
-    try {
-      window.localStorage.setItem(
-        ARCHIVE_STORAGE_KEY,
-        JSON.stringify(archivedQuotes)
-      );
-    } catch {
-      // ignore write errors (e.g. privacy mode)
-    }
-  }, [archivedQuotes]);
+    const updateDate = () => setToday(getEasternDate());
 
-  const handleArchive = () => {
-    const newArchivedQuote = {
-      id: Date.now(),
-      text: currentQuote.text,
-      author: currentQuote.author,
-      date: currentQuote.date,
+    const interval = window.setInterval(updateDate, 30_000);
+    window.addEventListener("focus", updateDate);
+    document.addEventListener("visibilitychange", updateDate);
+
+    return () => {
+      window.clearInterval(interval);
+      window.removeEventListener("focus", updateDate);
+      document.removeEventListener("visibilitychange", updateDate);
     };
-    setArchivedQuotes((prev) => [newArchivedQuote, ...prev]);
-  };
+  }, []);
+
+  const todayQuote = quotes.find((quote) => quote.date === today);
+
+  const archivedQuotes = quotes
+    .filter((quote) => quote.date < today)
+    .sort((a, b) => b.date.localeCompare(a.date));
 
   return (
-    <MainLayout>
-      <div className="space-y-8">
+    <MainLayout mainClassName="bg-[#FEED9F]">
+      <div
+  className="space-y-8 text-[#34283C] [&_h1]:font-inherit [&_h2]:font-inherit"
+  style={{ fontFamily: '"Courier New", Courier, monospace' }}
+>
         <header>
-          <h1 className="text-2xl font-normal mb-2">Daily Quotes</h1>
-          <p className="text-muted-foreground text-sm">
-            Daily inspiration. View-only mode.
+          <p className="text-sm font-bold uppercase tracking-widest text-[#9A3D36]">
+            A little daily inspiration
+          </p>
+          <h1 className="mt-2 text-3xl font-bold md:text-4xl">
+            Daily Quotes
+          </h1>
+          <p className="mt-2 text-sm text-[#594752]">
+            {formatDate(today)} · Eastern Time
           </p>
         </header>
 
-        {/* Current Quote */}
         <section>
-          <h2 className="text-sm font-normal text-muted-foreground mb-3 flex items-center gap-2">
-            <QuoteIcon className="w-4 h-4" />
-            Today's Quote
+          <h2 className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wide">
+            Today&apos;s Quote
           </h2>
-          <div className="quote-card">
-            <blockquote className="text-xl font-normal text-foreground mb-3 italic">
-              "{currentQuote.text}"
-            </blockquote>
-            <footer className="flex items-center justify-between">
-              <cite className="text-sm text-muted-foreground not-italic">
-                — {currentQuote.author}
-              </cite>
-              <div className="flex items-center gap-3">
-                <span className="text-xs text-muted-foreground">
-                  {currentQuote.date}
-                </span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleArchive}
-                  className="flex items-center gap-1"
+
+          <div className="rounded-lg border-2 border-[#34283C] bg-[#FFF9E6] p-5 shadow-[6px_6px_0_#D77A61] md:p-7">
+            {todayQuote ? (
+              <>
+                <blockquote className="text-xl font-medium leading-relaxed md:text-2xl">
+                  “{todayQuote.text}”
+                </blockquote>
+                <p className="mt-4 text-sm font-bold text-[#79423B]">
+                  — {todayQuote.author}
+                </p>
+              </>
+            ) : (
+              <p className="text-xl font-medium">
+                Pranjal&apos;s a bit busy today.
+              </p>
+            )}
+          </div>
+        </section>
+
+        <section>
+          <h2 className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wide">
+            <Archive className="h-4 w-4" aria-hidden="true" />
+            Quote Archive
+          </h2>
+
+          {archivedQuotes.length === 0 ? (
+            <div className="rounded-lg border-2 border-[#34283C] bg-[#CBE5D5] p-5 shadow-[6px_6px_0_#638A83]">
+              <p className="text-sm">
+                No past quotes yet. Check back another day!
+              </p>
+            </div>
+          ) : (
+            <div className="grid gap-5 md:grid-cols-2">
+              {archivedQuotes.map((quote) => (
+                <article
+                  key={quote.date}
+                  className="rounded-lg border-2 border-[#34283C] bg-[#CBE5D5] p-5 shadow-[5px_5px_0_#638A83]"
                 >
-                  <Archive className="w-3 h-3" />
-                  Archive
-                </Button>
-              </div>
-            </footer>
-          </div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-[#514453]">
+                    {formatDate(quote.date)}
+                  </p>
+                  <blockquote className="mt-3 text-base leading-relaxed">
+                    “{quote.text}”
+                  </blockquote>
+                  <p className="mt-3 text-sm font-bold text-[#79423B]">
+                    — {quote.author}
+                  </p>
+                </article>
+              ))}
+            </div>
+          )}
         </section>
-
-        {/* Archive */}
-        <section>
-          <h2 className="text-sm font-normal text-muted-foreground mb-3 flex items-center gap-2">
-            <Archive className="w-4 h-4" />
-            Archived Quotes
-          </h2>
-          <div className="border border-border rounded bg-card">
-            <ScrollArea className="h-[300px] p-4">
-              <div className="space-y-3">
-                {archivedQuotes.map((quote) => (
-                  <div
-                    key={quote.id}
-                    className="p-4 border border-border rounded bg-background hover:bg-muted/30 transition-colors"
-                  >
-                    <p className="text-foreground/90 mb-2 italic">
-                      "{quote.text}"
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground">
-                        — {quote.author}
-                      </span>
-                      <span className="text-xs text-muted-foreground">
-                        {quote.date}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </ScrollArea>
-          </div>
-        </section>
-
-        {/* Note about editing */}
-        <div className="p-4 bg-muted/50 rounded border border-border">
-          <p className="text-xs text-muted-foreground">
-            <strong>Note:</strong> To change the daily quote, edit the{" "}
-            <code className="bg-muted px-1 rounded">initialQuote</code> object in{" "}
-            <code className="bg-muted px-1 rounded">src/pages/Quotes.tsx</code>
-          </p>
-        </div>
       </div>
     </MainLayout>
   );
