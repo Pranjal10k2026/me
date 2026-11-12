@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { SidebarContext } from "@/components/layout/SidebarContext";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,9 +13,15 @@ import Cycling from "./pages/Cycling";
 import NotFound from "./pages/NotFound";
 import PetCanvas from "@/components/PetCanvas";
 
+
 const queryClient = new QueryClient();
 
 function App() {
+  const [collapsed, setCollapsed] = useState(false);
+
+const toggleSidebar = () => {
+  setCollapsed((previous) => !previous);
+};
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider delayDuration={0}>
@@ -21,6 +29,7 @@ function App() {
         <Sonner />
         <HashRouter>
           <PetCanvas />
+          <SidebarContext.Provider value={{ collapsed, toggleSidebar }}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/ideas" element={<Ideas />} />
@@ -29,6 +38,7 @@ function App() {
             <Route path="/cycling" element={<Cycling />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+        </SidebarContext.Provider>
         </HashRouter>
       </TooltipProvider>
     </QueryClientProvider>
