@@ -1,0 +1,52 @@
+name: Test Instagram connection
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check Instagram media access
+        env:
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+        run: |
+          node --input-type=module <<'NODE'
+          const token = process.env.INSTAGRAM_ACCESS_TOKEN;
+
+          if (!token) {
+            console.error("Instagram token is missing. Check the repository secret.");
+            process.exit(1);
+          }
+
+          const url = new URL("https://graph.instagram.com/me/media");
+          url.searchParams.set("fields", "id,media_type");
+          url.searchParams.set("limit", "3");
+
+          const response = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
+          if (!response.ok) {
+            console.error(`Instagram request failed with HTTP ${response.status}.`);
+            console.error("Check the token, permissions, and tester invitation.");
+            process.exit(1);
+          }
+
+          const result = await response.json();
+
+          if (!Array.isArray(result.data)) {
+            console.error("Instagram returned an unexpected response.");
+            process.exit(1);
+          }
+
+          console.log(`Connection successful. Found ${result.data.length} recent media items.`);
+          NODE
