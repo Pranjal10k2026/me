@@ -1,5 +1,5 @@
 import { MainLayout } from "@/components/layout/MainLayout";
-import profilePhoto from "@/assets/profile-photo.jpeg";
+import profilePhoto from "@/assets/new-profile.jpeg";
 
 const Index = () => {
   return (
@@ -15,7 +15,7 @@ const Index = () => {
           <div className="flex-1">
             <h1 className="text-3xl font-normal mb-2">Pranjal Kalekar</h1>
             <p className="text-muted-foreground text-sm mb-4">
-              kalekar.p@northeastern.edu • 857-294-2305
+              pranjalkalekar10@gmail.com
             </p>
             <p className="text-foreground/90 leading-relaxed max-w-2xl">
               Applied AI engineer with strong expertise in designing and deploying scalable
