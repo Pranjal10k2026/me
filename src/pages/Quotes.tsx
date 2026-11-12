@@ -75,11 +75,11 @@ const Quotes = () => {
         </header>
 
         <section>
-          <h2 className="retro-card p-5 md:p-7">
+          <h2 className="mb-3 text-sm font-bold uppercase tracking-wide">
             Today&apos;s Quote
           </h2>
 
-          <div className="rounded-lg border-2 border-[#34283C] bg-[#FFF9E6] p-5 shadow-[6px_6px_0_#D77A61] md:p-7">
+          <div className="retro-card p-5 md:p-7">
             {todayQuote ? (
               <>
                 <blockquote className="text-xl font-medium leading-relaxed md:text-2xl">
@@ -99,18 +99,18 @@ const Quotes = () => {
 
         <section>
           <h2 className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wide">
-            <Archive className="retro-card p-5" />
+            <Archive className="h-4 w-4" aria-hidden="true" />
             Quote Archive
           </h2>
 
           {archivedQuotes.length === 0 ? (
-            <div className="rounded-lg border-2 border-[#34283C] bg-[#CBE5D5] p-5 shadow-[6px_6px_0_#638A83]">
+            <div className="retro-card p-5">
               <p className="text-sm">
                 No past quotes yet. Check back another day!
               </p>
             </div>
           ) : (
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="retro-card p-5">
               {archivedQuotes.map((quote) => (
                 <article
                   key={quote.date}
@@ -122,7 +122,7 @@ const Quotes = () => {
                   <blockquote className="mt-3 text-base leading-relaxed">
                     “{quote.text}”
                   </blockquote>
-                  <p className="mt-3 text-sm font-bold text-[#79423B]">
+                  <p className="mt-3 text-sm font-bold text-accent">
                     — {quote.author}
                   </p>
                 </article>
