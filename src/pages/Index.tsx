@@ -32,7 +32,7 @@ const Index = () => {
             <span className="w-1.5 h-1.5 rounded-full bg-accent" />
             Resume
           </h2>
-          <div className="border border-border rounded bg-card overflow-hidden">
+          <div className="retro-card overflow-hidden">
             <div className="bg-secondary px-4 py-2 border-b border-border flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-destructive/60" />
               <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
@@ -81,7 +81,7 @@ const Index = () => {
 
 function SkillCard({ title, items }: { title: string; items: string[] }) {
   return (
-    <div className="p-4 border border-border rounded bg-card">
+    <div className="retro-card p-4">
       <h3 className="text-sm font-normal mb-2">{title}</h3>
       <div className="flex flex-wrap gap-1.5">
         {items.map((item) => (

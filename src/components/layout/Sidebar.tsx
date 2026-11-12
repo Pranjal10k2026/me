@@ -19,8 +19,8 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const location = useLocation();
 
   return (
-    <aside
-      className={`fixed left-0 top-0 h-screen overflow-y-auto bg-sidebar-bg border-r border-sidebar-border flex flex-col transition-[width] duration-200 ${
+    <aside 
+      className={`fixed left-0 top-0 h-screen overflow-y-auto bg-sidebar-bg border-r border-sidebar-border flex flex-col transition-[width] duration-200 text-[#34283C]${
         collapsed ? "w-16" : "w-[260px]"
       }`}
     >
@@ -34,11 +34,11 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         <div className={collapsed ? "hidden" : "min-w-0"}>
           <div className="flex items-center gap-2">
             <Bike className="w-4 h-4 shrink-0" aria-hidden="true" />
-            <div className="text-lg font-normal text-foreground truncate">
+            <div className="text-lg font-normal text-[#34283C] truncate">
               Pranjal Kalekar
             </div>
           </div>
-          <p className="text-xs text-muted-foreground mt-1">
+          <p className="text-xs text-[#34283C] mt-1">
             Optimizing Data
           </p>
         </div>
@@ -74,7 +74,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
                   title={item.name}
                   className={`sidebar-link flex min-h-11 items-center gap-3 rounded ${
                     collapsed ? "justify-center" : "justify-start"
-                  } ${isActive ? "active bg-secondary" : ""}`}
+                  } ${isActive ? "active bg-[#FFF2D0]" : ""}`}
                 >
                   <item.icon
                     className="w-4 h-4 shrink-0"

@@ -59,25 +59,23 @@ const Quotes = () => {
     .sort((a, b) => b.date.localeCompare(a.date));
 
   return (
-    <MainLayout mainClassName="bg-[#FEED9F]">
+    <MainLayout>
       <div
-  className="space-y-8 text-[#34283C] [&_h1]:font-inherit [&_h2]:font-inherit"
-  style={{ fontFamily: '"Courier New", Courier, monospace' }}
->
+  className="space-y-8">
         <header>
-          <p className="text-sm font-bold uppercase tracking-widest text-[#9A3D36]">
+          <p className="text-sm font-bold uppercase tracking-widest text-accent">
             A little daily inspiration
           </p>
           <h1 className="mt-2 text-3xl font-bold md:text-4xl">
             Daily Quotes
           </h1>
-          <p className="mt-2 text-sm text-[#594752]">
+          <p className="mt-2 text-sm text-muted-foreground">
             {formatDate(today)} · Eastern Time
           </p>
         </header>
 
         <section>
-          <h2 className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wide">
+          <h2 className="retro-card p-5 md:p-7">
             Today&apos;s Quote
           </h2>
 
@@ -87,7 +85,7 @@ const Quotes = () => {
                 <blockquote className="text-xl font-medium leading-relaxed md:text-2xl">
                   “{todayQuote.text}”
                 </blockquote>
-                <p className="mt-4 text-sm font-bold text-[#79423B]">
+                <p className="mt-4 text-sm font-bold text-accent">
                   — {todayQuote.author}
                 </p>
               </>
@@ -101,7 +99,7 @@ const Quotes = () => {
 
         <section>
           <h2 className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wide">
-            <Archive className="h-4 w-4" aria-hidden="true" />
+            <Archive className="retro-card p-5" />
             Quote Archive
           </h2>
 
@@ -118,7 +116,7 @@ const Quotes = () => {
                   key={quote.date}
                   className="rounded-lg border-2 border-[#34283C] bg-[#CBE5D5] p-5 shadow-[5px_5px_0_#638A83]"
                 >
-                  <p className="text-xs font-bold uppercase tracking-wide text-[#514453]">
+                  <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
                     {formatDate(quote.date)}
                   </p>
                   <blockquote className="mt-3 text-base leading-relaxed">

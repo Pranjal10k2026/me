@@ -67,7 +67,7 @@ rides.forEach((ride) => {
 
           <div
   ref={embedRef}
-  className="grid grid-cols-1 lg:grid-cols-2 gap-12"
+  className="grid grid-cols-1 lg:grid-cols-2 gap-12 retro-card p-4"
 />
 
           {embedError && (

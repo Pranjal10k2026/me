@@ -47,7 +47,7 @@ const Ideas = () => {
         <div className="mt-8">
           {ideas.map((idea) => (
             <div key={idea.id} className="timeline-item">
-              <div className="bg-card border border-border rounded p-5">
+              <div className="retro-card p-5">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="font-normal text-foreground">{idea.title}</h3>
                   <StatusBadge status={idea.status} />

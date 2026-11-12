@@ -90,7 +90,7 @@ const Pranpaan = () => {
                 href={post.permalink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block border border-border rounded overflow-hidden bg-card hover:opacity-90"
+                className="retro-card block overflow-hidden hover:opacity-90"
               >
                 {post.imageUrl ? (
                   <img
