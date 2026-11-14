@@ -37,6 +37,10 @@ export function usePet(canvasRef: RefObject<HTMLCanvasElement>) {
     let frameIndex = 0;
     let frameTime = 0;
     let stateTime = 0;
+    let nextGreetingAt = 0;
+    let greetingEndsAt = 0;
+
+    const randomGreetingDelay = () => 15_000 + Math.random() * 15_000;
     let sheet: Sheet;
     let image: HTMLImageElement;
 
@@ -92,9 +96,47 @@ export function usePet(canvasRef: RefObject<HTMLCanvasElement>) {
       facingLeft = target.x < pos.x;
       setState("running", "runRight");
     };
+const drawGreeting = () => {
+  const margin = 8;
+  const bubbleWidth = Math.min(160, window.innerWidth - margin * 2);
+  const bubbleHeight = 38;
 
+  // Keep the bubble inside the screen and prefer placing it above Lucy.
+  const x = Math.max(
+    margin,
+    Math.min(pos.x - bubbleWidth / 2, window.innerWidth - bubbleWidth - margin)
+  );
+  const preferredY =
+    pos.y - SIZE / 2 - bubbleHeight - 8 >= margin
+      ? pos.y - SIZE / 2 - bubbleHeight - 8
+      : pos.y + SIZE / 2 + 8;
+  const y = Math.max(
+    margin,
+    Math.min(preferredY, window.innerHeight - bubbleHeight - margin)
+  );
+
+  ctx.save();
+  ctx.fillStyle = "#FFF9E6";
+  ctx.strokeStyle = "#34283C";
+  ctx.lineWidth = 2;
+  ctx.fillRect(x, y, bubbleWidth, bubbleHeight);
+  ctx.strokeRect(x, y, bubbleWidth, bubbleHeight);
+
+  ctx.fillStyle = "#34283C";
+  ctx.font = "bold 14px 'Courier New', monospace";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("Hii, I am Lucy!", x + bubbleWidth / 2, y + bubbleHeight / 2, bubbleWidth - 12);
+  ctx.restore();
+};
     const tick = (now: number, last: number) => {
       if (disposed) return;
+      if (nextGreetingAt === 0) {
+      nextGreetingAt = now + randomGreetingDelay();
+    } else if (now >= nextGreetingAt) {
+      greetingEndsAt = now + 3_000;
+      nextGreetingAt = greetingEndsAt + randomGreetingDelay();
+    }
       const dt = Math.min(now - last, 100);
       stateTime += dt;
       frameTime += dt;
@@ -143,6 +185,9 @@ export function usePet(canvasRef: RefObject<HTMLCanvasElement>) {
       if (state === "running" && facingLeft) ctx.scale(-1, 1);
       ctx.drawImage(image, f.x, f.y, width, height, -SIZE / 2, -SIZE / 2, SIZE, SIZE);
       ctx.restore();
+      if (now < greetingEndsAt) {
+      drawGreeting();
+    }
 
       raf = requestAnimationFrame((n) => tick(n, now));
     };
