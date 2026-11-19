@@ -62,15 +62,15 @@ const Ideas = () => {
                   <StatusBadge status={idea.status} />
                 </div>
 
-                <p className="text-sm text-muted-foreground mb-4">{idea.description}</p>
+                <p className="text-sm text-muted-foreground mb-4 break-words">{idea.description}</p>
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     <CalendarDays className="w-3.5 h-3.5" />
                     <span>{idea.timeline}</span>
                   </div>
 
-                  <div className="flex gap-1.5">
+                  <div className="flex flex-wrap gap-1.5 sm:justify-end">
                     {idea.tags.map((tag) => (
                       <span
                         key={tag}

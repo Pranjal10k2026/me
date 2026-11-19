@@ -21,5 +21,10 @@ export const quotes: DailyQuote[] = [
     date: "2026-11-18",
     text: "Its literally Theranos 2.0 :skull: (about Startup called Helios)",
     author: "Sadab",
+  },
+    {
+    date: "2026-11-19",
+    text: "प्रयास हा प्रतिभेचा प्राणवायू आहे. (Effort is the oxygen for talent.)",
+    author: "Purushottam Laxman Deshpande in Sakharam Gatne",
   }
 ];
