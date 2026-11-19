@@ -12,7 +12,9 @@ const SIZE = 64;
 const WALK_SPEED = 140;
 const RUN_SPEED = 240;
 const ARRIVAL_DISTANCE = 3;
-const WAKE_DISTANCE = 24;
+const WAKE_DISTANCE = 64;
+const CURSOR_GAP = 12;
+const STOP_DISTANCE = SIZE / 2 + CURSOR_GAP;
 const NAP_CHANCE = 0.5;
 const NAP_TIME = 3000;
 const REQUIRED = ["walkLeft", "walkRight", "sitFront", "sitNap", "nap", "runRight"];
@@ -40,7 +42,7 @@ export function usePet(canvasRef: RefObject<HTMLCanvasElement>) {
     let nextGreetingAt = 0;
     let greetingEndsAt = 0;
 
-    const randomGreetingDelay = () => 15_000 + Math.random() * 15_000;
+    const randomGreetingDelay = () => 6_000 + Math.random() * 7_500;
     let sheet: Sheet;
     let image: HTMLImageElement;
 
@@ -67,19 +69,53 @@ export function usePet(canvasRef: RefObject<HTMLCanvasElement>) {
       play(animation);
     };
 
-    const startWalk = (x: number, y: number) => {
-      target = { x, y };
-      facingLeft = x < pos.x;
-      setState("walking", facingLeft ? "walkLeft" : "walkRight");
-    };
+const startWalk = (x: number, y: number) => {
+  const half = SIZE / 2;
+  const clamp = (value: number, min: number, max: number) =>
+    Math.max(min, Math.min(value, max));
 
-    const onPointerMove = (e: PointerEvent) => {
-      const x = e.clientX;
-      const y = e.clientY;
-      if (state === "walking") return startWalk(x, y);
-      const far = Math.hypot(x - pos.x, y - pos.y) > WAKE_DISTANCE;
-      if (far) startWalk(x, y);
-    };
+  // Try positions on each side of the cursor.
+  const candidates = [
+    { x: x - STOP_DISTANCE, y: clamp(y, half, window.innerHeight - half) },
+    { x: x + STOP_DISTANCE, y: clamp(y, half, window.innerHeight - half) },
+    { x: clamp(x, half, window.innerWidth - half), y: y - STOP_DISTANCE },
+    { x: clamp(x, half, window.innerWidth - half), y: y + STOP_DISTANCE },
+  ].filter(
+    (point) =>
+      point.x >= half &&
+      point.x <= window.innerWidth - half &&
+      point.y >= half &&
+      point.y <= window.innerHeight - half
+  );
+
+  // Pick the valid spot closest to Lucy.
+  candidates.sort(
+    (a, b) =>
+      Math.hypot(a.x - pos.x, a.y - pos.y) -
+      Math.hypot(b.x - pos.x, b.y - pos.y)
+  );
+
+  const nextTarget = candidates[0];
+  if (!nextTarget) return;
+
+  target = nextTarget;
+  facingLeft = target.x < pos.x;
+  setState("walking", facingLeft ? "walkLeft" : "walkRight");
+};
+
+const onPointerMove = (e: PointerEvent) => {
+  const x = e.clientX;
+  const y = e.clientY;
+  const dx = Math.abs(x - pos.x);
+  const dy = Math.abs(y - pos.y);
+
+  const cursorTooClose = dx < STOP_DISTANCE && dy < STOP_DISTANCE;
+  const cursorFarAway = Math.hypot(dx, dy) > WAKE_DISTANCE;
+
+  if (state === "walking" || cursorTooClose || cursorFarAway) {
+    startWalk(x, y);
+  }
+};
     window.addEventListener("pointermove", onPointerMove);
 
     const arrive = () => {
