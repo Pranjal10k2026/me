@@ -114,7 +114,7 @@ const Quotes = () => {
               {archivedQuotes.map((quote) => (
                 <article
                   key={quote.date}
-                  className="rounded-lg border-2 border-[#34283C] bg-[#CBE5D5] p-5 shadow-[5px_5px_0_#638A83]"
+                  className="rounded-lg border-2 border-[#34283C] bg-[#CBE5D5] p-5 shadow-[5px_5px_0_#638A83] dark:border-border dark:bg-secondary dark:shadow-[5px_5px_0_#a456bd]"
                 >
                   <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
                     {formatDate(quote.date)}
