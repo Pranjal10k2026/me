@@ -16,5 +16,10 @@ export const quotes: DailyQuote[] = [
     date: "2026-11-12",
     text: "If I could, I would. But I can't, so I shan't",
     author: "Sheldon Lee Cooper",
+  },
+  {
+    date: "2026-11-18",
+    text: "Its literally Theranos 2.0 :skull: (about Startup called Helios)",
+    author: "Sadab",
   }
 ];
