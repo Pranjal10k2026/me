@@ -17,7 +17,9 @@ import PetCanvas from "@/components/PetCanvas";
 const queryClient = new QueryClient();
 
 function App() {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(
+  () => window.matchMedia("(max-width: 767px)").matches
+);
 
 const toggleSidebar = () => {
   setCollapsed((previous) => !previous);

@@ -169,9 +169,9 @@
   }
   
   .pdf-viewer {
-    @apply w-full h-[70vh] border rounded-sm;
-    border-color: hsl(var(--border));
-  }
+  @apply block w-full h-[60vh] md:h-[70vh] border rounded-sm;
+  border-color: hsl(var(--border));
+}
   
   .quote-card {
     @apply p-6 border-l-2 bg-card;

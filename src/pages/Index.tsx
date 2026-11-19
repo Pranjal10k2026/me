@@ -6,7 +6,7 @@ const Index = () => {
     <MainLayout>
       <div className="space-y-8">
         {/* Header Section */}
-        <section className="flex items-start gap-8">
+        <section className="flex flex-col items-start gap-4 sm:flex-row sm:gap-8">
           <img
             src={profilePhoto}
             alt="Pranjal Kalekar"
@@ -14,7 +14,7 @@ const Index = () => {
           />
           <div className="flex-1">
             <h1 className="text-3xl font-normal mb-2">Pranjal Kalekar</h1>
-            <p className="text-muted-foreground text-sm mb-4">
+            <p className="text-muted-foreground text-sm mb-4 break-all">
               pranjalkalekar10@gmail.com
             </p>
             <p className="text-foreground/90 leading-relaxed max-w-2xl">
@@ -40,10 +40,18 @@ const Index = () => {
               </span>
             </div>
             <iframe
-                src={`${import.meta.env.BASE_URL}resume.pdf`}
-                className="pdf-viewer"
-                title="Resume PDF"
-              />
+  src={`${import.meta.env.BASE_URL}resume.pdf#view=FitH`}
+  className="pdf-viewer pointer-events-none md:pointer-events-auto"
+  title="Resume PDF"
+/>
+<a
+  href={`${import.meta.env.BASE_URL}resume.pdf`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block p-4 text-sm underline"
+>
+  Open resume PDF
+</a>
           </div>
         </section>
 
@@ -53,7 +61,7 @@ const Index = () => {
             <span className="w-1.5 h-1.5 rounded-full bg-accent" />
             Technical Skills
           </h2>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <SkillCard
               title="Languages"
               items={["Python", "MySQL", "MS SQL", "R", "C++", "HTML/CSS"]}
