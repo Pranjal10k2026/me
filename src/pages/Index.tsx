@@ -18,10 +18,8 @@ const Index = () => {
               pranjalkalekar10@gmail.com
             </p>
             <p className="text-foreground/90 leading-relaxed max-w-2xl">
-              Applied AI engineer with strong expertise in designing and deploying scalable
-              machine learning models using Python and contemporary toolkits. Developed
-              graph-based imputation algorithms and optimized GNN and XGBoost models to
-              achieve up to 40% performance gains over baselines in complex datasets.
+              Applied Data Scientist passionate about making impact on day-to-day life, climate and safe cities with a proven history of spearheading cross-functional data initiatives from initial prototype to
+              global scale. 
             </p>
           </div>
         </section>
